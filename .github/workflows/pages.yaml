@@ -5,7 +5,7 @@ on:
     paths:
       - index.html
       - LICENSE
-      - .github/workflows/pages.yml
+      - .github/workflows/pages.yaml
   workflow_dispatch:
 
 permissions:
@@ -39,10 +39,11 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p _site
-          cp index.html LICENSE _site/
+          cp index.html _site/
+          if [ -f LICENSE ]; then cp LICENSE _site/; fi
           touch _site/.nojekyll
 
-      - name: Upload only the guide and its license
+      - name: Upload the guide and any available license
         uses: actions/upload-pages-artifact@v4
         with:
           path: _site
